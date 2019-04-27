@@ -1,0 +1,17 @@
+<?php
+/**
+* sahan@devquickie.com
+*/
+$inputs     = (array) $_GET;
+$clPath     = isset($_GET["calendly"]) ? $_GET["calendly"] : null;
+$phoneField = isset($_GET["phone"]) ? $_GET["phone"] : null;
+$final      = [];
+foreach ($inputs as $inputField => $input) {
+	if ($phoneField == $inputField) {
+		$final[$inputField] = str_replace("+", "", trim($input));
+	} else {
+		$final[$inputField] = $input;
+	}
+}
+$query = http_build_query($final);
+header("Location: https://calendly.com/{$clPath}?{$query}");
